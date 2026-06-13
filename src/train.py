@@ -84,11 +84,11 @@ if __name__ == '__main__':
     W1, B1, W2, B2, W3, B3 = train(
         x_train,
         y_train,
-        seed=20,
-        epochs=100,
-        learning_rate=0.1,
-        lambda_reg=0.01,
-        verbose=10, 
+        seed=20,#20
+        epochs=100,#100
+        learning_rate=0.1,#0.1
+        lambda_reg=0.05,#0.05
+        verbose=10,
     )
     save_model(W1, B1, W2, B2, W3, B3)
 
