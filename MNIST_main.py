@@ -16,7 +16,6 @@ def show_image(image, predicted, true_label):
     plt.show()
 
 i = 856
-
 show_image(x_test[i], Pred[i], y_test[i])
 
 # print("Prediction of My Model on test set (First 10 images): ",Pred[:10])

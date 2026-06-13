@@ -2,7 +2,7 @@
 
 A fully connected neural network built using **only NumPy** — no TensorFlow, no PyTorch, no scikit-learn. Every component is implemented from scratch including forward propagation, backpropagation, and mini-batch gradient descent.
 
-**Final accuracy: 98.1% on validation set, 97.9% on test set.**
+**Final accuracy: 98.05% on validation set, 98.13% on test set.**
 
 ---
 
