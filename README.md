@@ -118,7 +118,10 @@ pip install numpy
 cd src
 python train.py
 ```
-
+**3. Run testing**
+```bash
+python MNIST_main.py
+```
 ---
 
 ## Key Concepts Implemented
