@@ -39,22 +39,22 @@ def forward_pass(W1,B1,W2,B2,W3,B3,X):
 # forward_pass(W1,B1,W2,B2,W3,B3,x_train[:,0])
 # Y = one_hot_encoding(y_train, 10)
 
-def backward_pass(W1, B1, W2, B2, W3, B3, z1, z2, A1, A2 ,z3, A3 ,X , Y ):
+def backward_pass(W1, B1, W2, B2, W3, B3, z1, z2, A1, A2 ,z3, A3 ,X , Y ,lambda_reg = 0.01):
     n = X.shape[0]
 
     # Output layer
     dz3 = A3 - Y
-    dW3 = (1/n) * dz3 @ A2.T
+    dW3 = (1/n) * dz3 @ A2.T +  lambda_reg / n * W3
     dB3 = (1/n) * np.sum(dz3 , axis=1, keepdims=True)
 
     # Hidden layer 2
     dz2 = (W3.T @ dz3) * relu_derivative(z2)
-    dW2 = (1/n) * dz2 @ A1.T
+    dW2 = (1/n) * dz2 @ A1.T +  lambda_reg / n * W2
     dB2 = (1/n) * np.sum(dz2 , axis=1, keepdims=True)
 
     # Hidden layer 1
     dz1 = (W2.T @ dz2) * relu_derivative(z1)
-    dW1 = (1/n) * dz1 @ X
+    dW1 = (1/n) * dz1 @ X +  lambda_reg / n * W1
     dB1 = (1/n) * np.sum(dz1 , axis=1, keepdims=True)
 
     return dW1 , dB1 , dW2 , dB2 , dW3, dB3

@@ -41,11 +41,12 @@ def load_model():
     B3 = np.load(os.path.join(MODELS_DIR, 'B3.npy'))
     return W1, B1, W2, B2, W3, B3
 
-def train(X_train, Y_train, epochs, learning_rate):
+def train(X_train, Y_train, epochs, learning_rate , lambda_reg , verbose , seed):
+    np.random.seed(seed)
     W1, B1, W2, B2, W3, B3 = init_weights()
     Y = one_hot_encoding(Y_train).T
 
-    batch_size = 48
+    batch_size = 64
     num_batches = X_train.shape[0] // batch_size
 
     for epoch in range(epochs):
@@ -55,18 +56,20 @@ def train(X_train, Y_train, epochs, learning_rate):
         Y = Y[:, indices]
 
         for i in range(num_batches):
-            X_batch = X_train[i * 48:i * 48 + 48, :]
-            Y_batch = Y[:, i*48:i*48+48]  # slice columns, not rows
+            start = i * batch_size
+            end = i * batch_size + batch_size
+            X_batch = X_train[start:end, :]
+            Y_batch = Y[:, start:end]  # slice columns, not rows
         # 1. forward pass
             z1, z2, z3, A1, A2, A3 = forward_pass(W1, B1, W2, B2, W3, B3, X_batch)
         # 2. compute loss
-            loss = cross_entropy_loss(Y_batch, A3)
+            loss = cross_entropy_loss(Y_batch, A3 , W1, W2, W3, lambda_reg)
         # 3. backward pass
-            dW1 , dB1 , dW2 , dB2 , dW3, dB3 = backward_pass(W1, B1, W2, B2, W3, B3, z1, z2, A1, A2 ,z3, A3 , X_batch , Y_batch )
+            dW1 , dB1 , dW2 , dB2 , dW3, dB3 = backward_pass(W1, B1, W2, B2, W3, B3, z1, z2, A1, A2 ,z3, A3 , X_batch , Y_batch , lambda_reg)
         # 4. update parameters
             W1, B1, W2, B2, W3, B3 = update_parameter(W1, B1, W2, B2, W3, B3, dW1 , dB1 , dW2 , dB2 , dW3, dB3 , learning_rate)
-        # 5. print loss every 10 epochs
-        if (epoch + 1) % 10 == 0:
+        # 5. print loss every VERBOSE epochs
+        if (epoch + 1) % verbose == 0:
             _, _, _, _, _, A3_full = forward_pass(W1, B1, W2, B2, W3, B3, X_train)
             acc = accuracy(A3_full, Y_train)
             _, _, _, _, _, A3_val = forward_pass(W1, B1, W2, B2, W3, B3, x_val)
@@ -78,7 +81,15 @@ def train(X_train, Y_train, epochs, learning_rate):
 
 
 if __name__ == '__main__':
-    W1, B1, W2, B2, W3, B3 = train(x_train, y_train, epochs=100, learning_rate=0.1)
+    W1, B1, W2, B2, W3, B3 = train(
+        x_train,
+        y_train,
+        seed=20,
+        epochs=100,
+        learning_rate=0.1,
+        lambda_reg=0.01,
+        verbose=10, 
+    )
     save_model(W1, B1, W2, B2, W3, B3)
 
 
