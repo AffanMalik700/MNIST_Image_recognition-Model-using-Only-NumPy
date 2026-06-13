@@ -106,7 +106,7 @@ dW1 = (1/n) * dZ1 @ X
 
 ## How to Run
 
-**1. Download MNIST data** into the `data/` folder from [Yann LeCun's website](http://yann.lecun.com/exdb/mnist/).
+**1. Download MNIST data** into the `data/` folder from [Kaggle](https://www.kaggle.com/datasets/hojjatk/mnist-dataset).
 
 **2. Install dependency**
 ```bash
