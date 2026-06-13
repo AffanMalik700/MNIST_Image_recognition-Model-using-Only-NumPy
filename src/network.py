@@ -4,11 +4,11 @@ from activations import *
 x_train, y_train , x_val, y_val,  x_test, y_test =  load_data()
 
 def init_weights():
-    W1 = np.random.randn(64,784) * 0.05
-    B1 = np.zeros((64,1))
-    W2 = np.random.randn(16,64) * 0.05
-    B2 = np.zeros((16,1))
-    W3 = np.random.randn(10,16) * 0.05
+    W1 = np.random.randn(128,784) * 0.05
+    B1 = np.zeros((128,1))
+    W2 = np.random.randn(64,128) * 0.05
+    B2 = np.zeros((64,1))
+    W3 = np.random.randn(10,64) * 0.05
     B3 = np.zeros((10,1))
     return W1,B1,W2,B2,W3,B3
 

@@ -35,7 +35,7 @@ def load_data():
     X_val = train_data[0:int(0.2*m) , :]
     y_val = train_labels[0:int(0.2*m)]
 
-    X_test  = load_images('../data/t10k-images.idx3-ubyte').T
+    X_test  = load_images('../data/t10k-images.idx3-ubyte')
     y_test  = load_labels('../data/t10k-labels.idx1-ubyte')
     return X_train, y_train, X_val , y_val, X_test, y_test
 

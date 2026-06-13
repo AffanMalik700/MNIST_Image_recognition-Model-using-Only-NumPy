@@ -18,9 +18,11 @@ def train(X_train, Y_train, epochs, learning_rate):
     num_batches = X_train.shape[0] // batch_size
 
     for epoch in range(epochs):
-        # indices = np.random.permutation(len(X_train))
-        # X_train = X_train[indices]
-        # Y = Y[indices]
+        indices = np.random.permutation(X_train.shape[0])
+        X_train = X_train[indices]
+        Y_train = Y_train[indices]
+        Y = Y[:, indices]
+
         for i in range(num_batches):
             X_batch = X_train[i * 48:i * 48 + 48, :]
             Y_batch = Y[:, i*48:i*48+48]  # slice columns, not rows
@@ -35,10 +37,14 @@ def train(X_train, Y_train, epochs, learning_rate):
         # 5. print loss every 10 epochs
         if (epoch + 1) % 10 == 0:
             _, _, _, _, _, A3_full = forward_pass(W1, B1, W2, B2, W3, B3, X_train)
-            acc = accuracy(A3_full, y_train)
+            acc = accuracy(A3_full, Y_train)
             _, _, _, _, _, A3_val = forward_pass(W1, B1, W2, B2, W3, B3, x_val)
             val_acc = accuracy(A3_val, y_val)
-            print(f"Epoch {epoch+1} | Loss: {loss:.8f} | Train: {acc:.2f}% | Val: {val_acc:.2f}%")
+            _, _, _, _, _, A3_test = forward_pass(W1, B1, W2, B2, W3, B3, x_test)
+            test_acc = accuracy(A3_test, y_test)
+            print(f"Epoch {epoch+1} | Loss: {loss:.8f} | Train: {acc:.2f}% | Val: {val_acc:.2f}% | test: {test_acc:.2f}%")
     return W1, B1, W2, B2, W3, B3
 
-W1, B1, W2, B2, W3, B3 = train(x_train, y_train, epochs=80, learning_rate=0.1)
+W1, B1, W2, B2, W3, B3 = train(x_train, y_train, epochs=100, learning_rate=0.1)
+
+
