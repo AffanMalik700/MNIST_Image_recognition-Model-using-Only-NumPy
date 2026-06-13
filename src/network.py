@@ -1,7 +1,15 @@
 import numpy as np
-from data_loader import *
-from activations import *
-x_train, y_train , x_val, y_val,  x_test, y_test =  load_data()
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
+try:
+    from .data_loader import *
+    from .activations import *
+except ImportError:
+    from data_loader import *
+    from activations import *
+
+# x_train, y_train , x_val, y_val,  x_test, y_test =  load_data()
 
 def init_weights():
     W1 = np.random.randn(128,784) * 0.05

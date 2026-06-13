@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
-
+import sys
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 import struct
 
 def load_images(filepath):
@@ -25,8 +27,8 @@ def one_hot_encoding(labels, num_classes=10):
     return encoded
 
 def load_data():
-    train_data = load_images('../data/train-images.idx3-ubyte')
-    train_labels = load_labels('../data/train-labels.idx1-ubyte')
+    train_data = load_images(os.path.join(BASE_DIR, 'data', 'train-images.idx3-ubyte'))
+    train_labels = load_labels(os.path.join(BASE_DIR, 'data', 'train-labels.idx1-ubyte'))
     m , n = train_data.shape
 
     X_train = train_data[int(0.2*m):m , :]
@@ -35,7 +37,7 @@ def load_data():
     X_val = train_data[0:int(0.2*m) , :]
     y_val = train_labels[0:int(0.2*m)]
 
-    X_test  = load_images('../data/t10k-images.idx3-ubyte')
-    y_test  = load_labels('../data/t10k-labels.idx1-ubyte')
+    X_test = load_images(os.path.join(BASE_DIR, 'data', 't10k-images.idx3-ubyte'))
+    y_test = load_labels(os.path.join(BASE_DIR, 'data', 't10k-labels.idx1-ubyte'))
     return X_train, y_train, X_val , y_val, X_test, y_test
 

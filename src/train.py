@@ -1,14 +1,45 @@
 import numpy as np
-from network import *
-from loss import *
-from data_loader import *
-from activations import *
+import sys
+import os
+MODELS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'models')
+try:
+    from .network import *
+    from .loss import *
+    from .data_loader import *
+    from .activations import *
+except ImportError:
+    from network import *
+    from loss import *
+    from data_loader import *
+    from activations import *
 
 x_train, y_train , x_val, y_val,  x_test, y_test =  load_data()
+def predict(W1, B1, W2, B2, W3, B3, X):
+    _, _, _, _, _, A3 = forward_pass(W1, B1, W2, B2, W3, B3, X)
+    return np.argmax(A3, axis=0)
 
 def accuracy(A3, y_true):
     predictions = np.argmax(A3, axis=0)
     return np.mean(predictions == y_true) * 100
+
+
+def save_model(W1, B1, W2, B2, W3, B3):
+    os.makedirs(MODELS_DIR, exist_ok=True)
+    np.save(os.path.join(MODELS_DIR, 'W1.npy'), W1)
+    np.save(os.path.join(MODELS_DIR, 'B1.npy'), B1)
+    np.save(os.path.join(MODELS_DIR, 'W2.npy'), W2)
+    np.save(os.path.join(MODELS_DIR, 'B2.npy'), B2)
+    np.save(os.path.join(MODELS_DIR, 'W3.npy'), W3)
+    np.save(os.path.join(MODELS_DIR, 'B3.npy'), B3)
+
+def load_model():
+    W1 = np.load(os.path.join(MODELS_DIR, 'W1.npy'))
+    B1 = np.load(os.path.join(MODELS_DIR, 'B1.npy'))
+    W2 = np.load(os.path.join(MODELS_DIR, 'W2.npy'))
+    B2 = np.load(os.path.join(MODELS_DIR, 'B2.npy'))
+    W3 = np.load(os.path.join(MODELS_DIR, 'W3.npy'))
+    B3 = np.load(os.path.join(MODELS_DIR, 'B3.npy'))
+    return W1, B1, W2, B2, W3, B3
 
 def train(X_train, Y_train, epochs, learning_rate):
     W1, B1, W2, B2, W3, B3 = init_weights()
@@ -45,6 +76,12 @@ def train(X_train, Y_train, epochs, learning_rate):
             print(f"Epoch {epoch+1} | Loss: {loss:.8f} | Train: {acc:.2f}% | Val: {val_acc:.2f}% | test: {test_acc:.2f}%")
     return W1, B1, W2, B2, W3, B3
 
-W1, B1, W2, B2, W3, B3 = train(x_train, y_train, epochs=100, learning_rate=0.1)
+
+if __name__ == '__main__':
+    W1, B1, W2, B2, W3, B3 = train(x_train, y_train, epochs=100, learning_rate=0.1)
+    save_model(W1, B1, W2, B2, W3, B3)
+
+
+
 
 
