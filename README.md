@@ -131,3 +131,11 @@ python MNIST_main.py
 - **Vectorized operations** — all computations use matrix operations, no Python loops in forward/backward pass
 - **Mini-batch gradient descent** — faster convergence than full-batch, better generalization than single-sample
 - **Overfitting detection** — train vs validation accuracy gap monitoring
+
+## References & Learning Resources
+
+- **Andrew Ng's Machine Learning / Deep Learning courses**
+- **3Blue1Brown Neural Networks series**
+- **NumPy documentation**
+- **The Softmax function and its derivative** [Eli Bendersky's website](https://eli.thegreenplace.net/2016/the-softmax-function-and-its-derivative/) 
+- **Book - Neural Networks and Deep Learning by Michael Nielson** [Book website](http://neuralnetworksanddeeplearning.com/)
