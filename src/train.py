@@ -15,15 +15,19 @@ except ImportError:
 
 x_train, y_train , x_val, y_val,  x_test, y_test =  load_data()
 def predict(W1, B1, W2, B2, W3, B3, X):
+    """Run forward pass and return predicted digit class for each input image."""
     _, _, _, _, _, A3 = forward_pass(W1, B1, W2, B2, W3, B3, X)
     return np.argmax(A3, axis=0)
 
 def accuracy(A3, y_true):
+    """Return percentage of correct predictions."""
+
     predictions = np.argmax(A3, axis=0)
     return np.mean(predictions == y_true) * 100
 
 
 def save_model(W1, B1, W2, B2, W3, B3):
+    """Save all weight and bias arrays to the models/ directory."""
     os.makedirs(MODELS_DIR, exist_ok=True)
     np.save(os.path.join(MODELS_DIR, 'W1.npy'), W1)
     np.save(os.path.join(MODELS_DIR, 'B1.npy'), B1)
@@ -33,6 +37,7 @@ def save_model(W1, B1, W2, B2, W3, B3):
     np.save(os.path.join(MODELS_DIR, 'B3.npy'), B3)
 
 def load_model():
+    """Load and return all weight and bias arrays from the models/ directory."""
     W1 = np.load(os.path.join(MODELS_DIR, 'W1.npy'))
     B1 = np.load(os.path.join(MODELS_DIR, 'B1.npy'))
     W2 = np.load(os.path.join(MODELS_DIR, 'W2.npy'))
@@ -42,6 +47,7 @@ def load_model():
     return W1, B1, W2, B2, W3, B3
 
 def train(X_train, Y_train, epochs, learning_rate , lambda_reg , verbose , seed):
+    """Train the network using mini-batch gradient descent and return trained parameters."""
     np.random.seed(seed)
     W1, B1, W2, B2, W3, B3 = init_weights()
     Y = one_hot_encoding(Y_train).T

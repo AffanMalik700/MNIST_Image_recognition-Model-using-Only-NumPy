@@ -83,25 +83,26 @@ dW1 = (1/n) * dZ1 @ X
 
 ## Hyperparameters
 
-| Parameter     | Value  |
-|---------------|--------|
-| Learning rate | 0.1    |
-| Batch size    | 32     |
-| Epochs        | 100    |
-| Hidden layer 1| 128    |
-| Hidden layer 2| 64     |
-| Weight init   | `randn * 0.1` |
+| Parameter      | Value         |
+|----------------|---------------|
+| Learning rate  | 0.1           |
+| Batch size     | 64            |
+| Epochs         | 100           |
+| Hidden layer 1 | 128           |
+| Hidden layer 2 | 64            |
+| Weight init    | `randn * 0.1` |
+| Regularization | .25           |
+
 
 ---
 
 ## Results
 
-| Epoch | Train Acc | Val Acc | Test Acc |
-|-------|-----------|---------|----------|
-| 10    | 99.31%    | 97.54%  | 97.52%   |
-| 30    | 100.00%   | 98.11%  | 97.85%   |
-| 100   | 100.00%   | 98.05%  | 97.84%   |
-
+| Epoch | Train Acc | Val Acc  | Test Acc |
+|-------|----------|----------|----------|
+| 10    | 99.31%   | 97.54%   | 97.52%   |
+| 30    | 99.67%   | 98.11%   | 97.85%   |
+| 100   | 99.86%   | 98.05%   | 98.13%   |
 ---
 
 ## How to Run

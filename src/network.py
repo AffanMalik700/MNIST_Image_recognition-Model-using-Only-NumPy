@@ -12,6 +12,7 @@ except ImportError:
 # x_train, y_train , x_val, y_val,  x_test, y_test =  load_data()
 
 def init_weights():
+    """Initialize all weight matrices and bias vectors with small random values."""
     W1 = np.random.randn(128,784) * 0.05
     B1 = np.zeros((128,1))
     W2 = np.random.randn(64,128) * 0.05
@@ -21,6 +22,8 @@ def init_weights():
     return W1,B1,W2,B2,W3,B3
 
 def forward_pass(W1,B1,W2,B2,W3,B3,X):
+    """Run input X through all layers and return intermediate values and final predictions."""
+
     X = X.T
     z1 = np.matmul(W1,X) + B1
     A1 = relu(z1)
@@ -40,6 +43,7 @@ def forward_pass(W1,B1,W2,B2,W3,B3,X):
 # Y = one_hot_encoding(y_train, 10)
 
 def backward_pass(W1, B1, W2, B2, W3, B3, z1, z2, A1, A2 ,z3, A3 ,X , Y ,lambda_reg = 0.01):
+    """Compute gradients for all parameters using backpropagation."""
     n = X.shape[0]
 
     # Output layer
@@ -59,6 +63,7 @@ def backward_pass(W1, B1, W2, B2, W3, B3, z1, z2, A1, A2 ,z3, A3 ,X , Y ,lambda_
 
     return dW1 , dB1 , dW2 , dB2 , dW3, dB3
 def update_parameter(W1, B1, W2, B2, W3, B3, dW1 , dB1 , dW2 , dB2 , dW3, dB3 , learning_rate):
+    """Update all weights and biases using gradient descent."""
     W1 = W1 - learning_rate * dW1
     B1 = B1 - learning_rate * dB1
     W2 = W2 - learning_rate * dW2

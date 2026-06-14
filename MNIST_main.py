@@ -1,7 +1,6 @@
-import numpy as np
 import matplotlib.pyplot as plt
 from src.data_loader import load_data
-from src.train import predict , load_model ,accuracy
+from src.train import predict , load_model
 
 _, _, _, _, x_test, y_test = load_data()
 
@@ -15,10 +14,11 @@ def show_image(image, predicted, true_label):
     plt.axis('off')
     plt.show()
 
-i = 856
-show_image(x_test[i], Pred[i], y_test[i])
+for i in range(5):
+    i = 2*i + 32
+    show_image(x_test[i], Pred[i], y_test[i])
 
-# print("Prediction of My Model on test set (First 10 images): ",Pred[:10])
+# print("Prediction of My Model on test set (First 10 images):",Pred[:10])
 # print("True Labels of images on test set : ",y_test[:10])
 # print("Accuracy on test set : ", np.mean(Pred == y_test) * 100)
 
